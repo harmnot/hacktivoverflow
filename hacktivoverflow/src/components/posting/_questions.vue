@@ -31,8 +31,12 @@
         </b-row>
         <b-col offset="1">
           <div class="d-flex flex-row colos">
-            <label for="delete" class="p-2 mx-2 cursor"> delete </label>
-            <label for="delete" class="p-2 mx-2 cursor"> edit </label>
+            <label for="delete" @click="deleting(answers._id)" class="p-2 mx-2 cursor">
+              delete
+            </label>
+            <label for="edit" @click="edit(answers._id)" class="p-2 mx-2 cursor">
+              edit
+            </label>
           </div></b-col
         >
       </b-col>
@@ -82,6 +86,7 @@ export default {
           type: 'error',
           text: 'you are not allow to do this, first login',
         });
+        this.content = '';
       } else {
       }
       this.$axios
@@ -111,11 +116,37 @@ export default {
           console.log(err.response);
         });
     },
+    deleting(id) {
+      if (!localStorage.getItem('token')) {
+        this.$swal.fire({
+          type: 'error',
+          text: 'you are not allow to do this, first login',
+        });
+      }
+    },
+    edit(id) {
+      if (!localStorage.getItem('token')) {
+        this.$swal.fire({
+          type: 'error',
+          text: 'you are not allow to do this, first login',
+        });
+      }
+    },
     upAnswer(id) {
-      console.log(id);
+      if (!localStorage.getItem('token')) {
+        this.$swal.fire({
+          type: 'error',
+          text: 'you are not allow to do this, first login',
+        });
+      }
     },
     downAnswer(id) {
-      console.log(id);
+      if (!localStorage.getItem('token')) {
+        this.$swal.fire({
+          type: 'error',
+          text: 'you are not allow to do this, first login',
+        });
+      }
     },
   },
   mounted() {

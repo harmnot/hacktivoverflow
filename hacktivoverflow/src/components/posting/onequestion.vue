@@ -1,7 +1,7 @@
 <template>
   <b-container>
-    <b-row>
-      <b-col sm="2">
+    <b-row class="p-2">
+      <b-col sm="2" class="p-4">
         <div class="d-flex flex-column" id="makeCenter">
           <i class="fas fa-sort-up size" @click="upQuestion(question._id)"></i>
           <span class="size"> {{ question.upvote.length - question.downvote.length }}</span>

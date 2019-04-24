@@ -30,15 +30,41 @@ class AnswerService {
 
   static async updated(req, res, next) {
     try {
-      const updateThis = await Answer.findOneAndUpdate(
-        { _id: req.params.id },
-        { ...req.body },
-        { runValidators: true }
-      );
-      if (!updateThis) {
-        res.status(400).json({ error: `can't found any` });
+      if (req.body.upvote) {
+        const updateThis = await Answer.findOneAndUpdate(
+          {
+            _id: req.params.id
+          },
+          { $addToSet: { upvote: req.user._id } },
+          { runValidators: true }
+        );
+        if (!updateThis) {
+          res.status(400).json({ error: `can't found any` });
+        } else {
+          res.status(200).json(updateThis);
+        }
+      } else if (req.body.downvote) {
+        const updateThis = await Answer.findOneAndUpdate(
+          { _id: req.params.id },
+          { $addToSet: { upvote: req.user._id } },
+          { runValidators: true }
+        );
+        if (!updateThis) {
+          res.status(400).json({ error: `can't found any` });
+        } else {
+          res.status(200).json(updateThis);
+        }
       } else {
-        res.status(200).json(updateThis);
+        const updateThis = await Answer.findOneAndUpdate(
+          { _id: req.params.id },
+          { ...req.body },
+          { runValidators: true }
+        );
+        if (!updateThis) {
+          res.status(400).json({ error: `can't found any` });
+        } else {
+          res.status(200).json(updateThis);
+        }
       }
     } catch (e) {
       next(e);
