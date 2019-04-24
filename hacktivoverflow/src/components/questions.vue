@@ -60,5 +60,5 @@ export default {
     line-height: 1.5
     cursor: pointer;
 .size
-    font-size 33px
+    font-size 34px
 </style>

@@ -8,7 +8,7 @@
           <i class="fas fa-sort-down size" @click="downQuestion(question._id)"></i>
         </div>
       </b-col>
-      <b-col>
+      <b-col class="p-4">
         <b-col>
           <h2>{{ question.title }}</h2>
         </b-col>

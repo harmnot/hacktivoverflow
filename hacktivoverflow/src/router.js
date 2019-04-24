@@ -40,7 +40,7 @@ export default new Router({
     {
       path: '/question/:id',
       name: 'afterposting',
-      component: () => import('./components/posting/afterpost.vue'),
+      component: () => import('./components/posting/_questions.vue'),
     },
   ],
 });

@@ -2,7 +2,7 @@
   <b-container id="fonts">
     <!-- component question -->
     <Loader v-if="!question" />
-    <Question :question="question" v-else />
+    <Question :question="question" id="back" v-else />
     <b-row>
       <b-col md="10" class="p-2 offset-md-1 my-4">
         <b-form @submit.prevent="answer">
@@ -14,8 +14,8 @@
 
     <Loader v-if="!question.answers" />
     <div class="" v-for="(answers, index) in question.answers" :key="index" class="p-2 my-2" v-else>
-      <b-col sm="10" offset="1">
-        <b-row class="" id="borde">
+      <b-col sm="10" offset="1" id="borde">
+        <b-row class="">
           <b-col sm="2" class="p-2">
             <div class="d-flex flex-column" id="makeCenter">
               <i class="fas fa-sort-up answer" @click="upAnswer(answers._id)"></i>
@@ -29,6 +29,12 @@
             </b-col>
           </b-col>
         </b-row>
+        <b-col offset="1">
+          <div class="d-flex flex-row colos">
+            <label for="delete" class="p-2 mx-2 cursor"> delete </label>
+            <label for="delete" class="p-2 mx-2 cursor"> edit </label>
+          </div></b-col
+        >
       </b-col>
     </div>
   </b-container>
@@ -121,22 +127,28 @@ export default {
 <style lang="stylus" scoped>
 @import url('https://rsms.me/inter/inter.css')
 
+#back
+  background #f4f4f4
+  border-radius 20px
 
 #fonts
   font-family 'iner', sans-serif
   margin-top 5rem;
 #makeCenter
   text-align center
-
 .fa, .fab, .fal, .far, .fas
   line-height: 1.2
   cursor: pointer;
-
+.colos
+  color rgb(138, 150, 144)
 .size
   font-size 43px
 .answer
   font-size: 20px
 #borde
   border 1px solid
+  margin 0 auto
+.cursor
+  cursor: pointer;
   // background-color rgb(191, 121, 47)
 </style>
