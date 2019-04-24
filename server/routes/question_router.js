@@ -15,13 +15,18 @@ const [Authentic, Authorization] = [
 router.get("/getwhatever", QuestionService.clientQuestions);
 
 router.get("/getall", QuestionService.findAllPopulate);
-router.get("/userquestions", QuestionService.findPopulate);
+router.get("/userquestions", Authentic, QuestionService.findPopulate);
 router.get("/search", QuestionService.filterQuestions);
 router.get("/userquestion/:id", QuestionService.deepPopulate);
 // router.get("/userquestion/:id", QuestionService.deepPopulate);
 router.post("/add", Authentic, QuestionService.add);
-router.put("/update/:id", QuestionService.updatedOne);
-router.delete("/delete/:id", QuestionService.findOneAndDelete);
+router.put("/update/:id", Authentic, Authorization, QuestionService.updatedOne);
+router.delete(
+  "/delete/:id",
+  Authentic,
+  Authorization,
+  QuestionService.findOneAndDelete
+);
 
 router.use((err, req, res, next) => {
   if (err) {

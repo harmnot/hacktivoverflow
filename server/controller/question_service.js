@@ -110,15 +110,39 @@ class QuestionService {
 
   static async updatedOne(req, res, next) {
     try {
-      const update = await Question.findOneAndUpdate(
-        { _id: req.params.id },
-        { ...req.body },
-        { runValidators: true }
-      );
-      if (!update) {
-        res.status(204).json({ error: "no content" });
+      if (req.body.downvote) {
+        const update = await Question.findOneAndUpdate(
+          { _id: req.params.id },
+          { $addToSet: { downvote: req.user._id } },
+          { runValidators: true }
+        );
+        if (!update) {
+          res.status(204).json({ error: "no content" });
+        } else {
+          res.status(200).json(update);
+        }
+      } else if (req.body.upvote) {
+        const update = await Question.findOneAndUpdate(
+          { _id: req.params.id },
+          { $addToSet: { upvote: req.user._id } },
+          { runValidators: true }
+        );
+        if (!update) {
+          res.status(204).json({ error: "no content" });
+        } else {
+          res.status(200).json(update);
+        }
       } else {
-        res.status(200).json(update);
+        const update = await Question.findOneAndUpdate(
+          { _id: req.params.id },
+          { ...req.body },
+          { runValidators: true }
+        );
+        if (!update) {
+          res.status(204).json({ error: "no content" });
+        } else {
+          res.status(200).json(update);
+        }
       }
     } catch (e) {
       next(e);
