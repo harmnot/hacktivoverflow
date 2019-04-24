@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container id="fonts">
     <!-- component question -->
     <Question :question="question" />
     <b-row>
@@ -11,12 +11,9 @@
       </b-col>
     </b-row>
 
-    <div id="borde">
-      <div class="" v-for="(answers, index) in question.answers" :key="index">
-        <b-row class="">
-          <!-- <b-col>
-          <h3 v-html="answers.answer"></h3>
-        </b-col> -->
+    <div class="" v-for="(answers, index) in question.answers" :key="index" class="p-2">
+      <b-col sm="10" offset="1">
+        <b-row class="" id="borde">
           <b-col sm="2" class="p-2">
             <div class="d-flex flex-column" id="makeCenter">
               <i class="fas fa-sort-up answer" @click="upAnswer(answers._id)"></i>
@@ -30,7 +27,7 @@
             </b-col>
           </b-col>
         </b-row>
-      </div>
+      </b-col>
     </div>
   </b-container>
 </template>
@@ -118,6 +115,11 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+@import url('https://rsms.me/inter/inter.css')
+
+
+#fonts
+  font-family 'iner', sans-serif
 
 #makeCenter
   text-align center
@@ -131,5 +133,6 @@ export default {
 .answer
   font-size: 20px
 #borde
-  background-color 'pink'
+  border 1px solid
+  // background-color rgb(191, 121, 47)
 </style>

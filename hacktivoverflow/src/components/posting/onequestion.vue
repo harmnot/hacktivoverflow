@@ -4,7 +4,7 @@
       <b-col sm="2">
         <div class="d-flex flex-column" id="makeCenter">
           <i class="fas fa-sort-up size" @click="upQuestion(question._id)"></i>
-          <span class="size"> 0 </span>
+          <span class="size"> {{ question.upvote.length - question.downvote.length }}</span>
           <i class="fas fa-sort-down size" @click="downQuestion(question._id)"></i>
         </div>
       </b-col>
@@ -24,6 +24,54 @@
 export default {
   name: 'justonequestion',
   props: ['question'],
+  methods: {
+    upQuestion(id) {
+      this.$axios
+        .put(
+          '/api/question/update/' + id,
+          {
+            upvote: true,
+          },
+          {
+            headers: {
+              token: localStorage.getItem('token'),
+            },
+          },
+        )
+        .then(({ data }) => {
+          console.log(data);
+        })
+        .catch(err => {
+          this.$swal.fire({
+            type: 'error',
+            text: err.response.data.error,
+          });
+        });
+    },
+    downQuestion(id) {
+      this.$axios
+        .put(
+          '/api/question/update/' + id,
+          {
+            downvote: true,
+          },
+          {
+            headers: {
+              token: localStorage.getItem('token'),
+            },
+          },
+        )
+        .then(({ data }) => {
+          console.log(data);
+        })
+        .catch(err => {
+          this.$swal.fire({
+            type: 'error',
+            text: err.response.data.error,
+          });
+        });
+    },
+  },
 };
 </script>
 
