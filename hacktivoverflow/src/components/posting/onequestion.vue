@@ -26,50 +26,64 @@ export default {
   props: ['question'],
   methods: {
     upQuestion(id) {
-      this.$axios
-        .put(
-          '/api/question/update/' + id,
-          {
-            upvote: true,
-          },
-          {
-            headers: {
-              token: localStorage.getItem('token'),
+      if (localStorage.getItem('token')) {
+        this.$axios
+          .put(
+            '/api/question/update/' + id,
+            {
+              upvote: true,
             },
-          },
-        )
-        .then(({ data }) => {
-          console.log(data);
-        })
-        .catch(err => {
-          this.$swal.fire({
-            type: 'error',
-            text: err.response.data.error,
+            {
+              headers: {
+                token: localStorage.getItem('token'),
+              },
+            },
+          )
+          .then(({ data }) => {
+            console.log(data);
+          })
+          .catch(err => {
+            this.$swal.fire({
+              type: 'error',
+              text: err.response.data.error,
+            });
           });
+      } else {
+        this.$swal.fire({
+          type: 'error',
+          text: 'you need to login first',
         });
+      }
     },
     downQuestion(id) {
-      this.$axios
-        .put(
-          '/api/question/update/' + id,
-          {
-            downvote: true,
-          },
-          {
-            headers: {
-              token: localStorage.getItem('token'),
+      if (localStorage.getItem('token')) {
+        this.$axios
+          .put(
+            '/api/question/update/' + id,
+            {
+              downvote: true,
             },
-          },
-        )
-        .then(({ data }) => {
-          console.log(data);
-        })
-        .catch(err => {
-          this.$swal.fire({
-            type: 'error',
-            text: err.response.data.error,
+            {
+              headers: {
+                token: localStorage.getItem('token'),
+              },
+            },
+          )
+          .then(({ data }) => {
+            console.log(data);
+          })
+          .catch(err => {
+            this.$swal.fire({
+              type: 'error',
+              text: err.response.data.error,
+            });
           });
+      } else {
+        this.$swal.fire({
+          type: 'error',
+          text: 'you need to login first',
         });
+      }
     },
   },
 };

@@ -1,5 +1,7 @@
 <template>
-  <Questions :questions="questions"></Questions>
+  <Loader v-if="!questions.length" />
+
+  <Questions :questions="questions" v-else></Questions>
 </template>
 
 <script>
@@ -8,11 +10,13 @@
 // import Login from '@/components/form/login.vue';
 import { mapState, mapActions } from 'vuex';
 import Questions from '../components/questions.vue';
+import Loader from './loader.vue';
 
 export default {
   name: 'home',
   components: {
     Questions,
+    Loader,
   },
   computed: {
     ...mapState(['questions']),

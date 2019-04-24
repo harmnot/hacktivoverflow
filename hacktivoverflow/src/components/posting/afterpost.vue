@@ -1,7 +1,8 @@
 <template>
   <b-container id="fonts">
     <!-- component question -->
-    <Question :question="question" />
+    <Loader v-if="!question" />
+    <Question :question="question" v-else />
     <b-row>
       <b-col md="10" class="p-2 offset-md-1 my-4">
         <b-form @submit.prevent="answer">
@@ -11,7 +12,8 @@
       </b-col>
     </b-row>
 
-    <div class="" v-for="(answers, index) in question.answers" :key="index" class="p-2">
+    <Loader v-if="!question.answers" />
+    <div class="" v-for="(answers, index) in question.answers" :key="index" class="p-2 my-2" v-else>
       <b-col sm="10" offset="1">
         <b-row class="" id="borde">
           <b-col sm="2" class="p-2">
@@ -35,11 +37,13 @@
 <script>
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Question from './onequestion.vue';
+import Loader from '../../views/loader.vue';
 
 export default {
   name: 'afterposting',
   components: {
     Question,
+    Loader,
   },
   data() {
     return {
@@ -120,7 +124,7 @@ export default {
 
 #fonts
   font-family 'iner', sans-serif
-
+  margin-top 5rem;
 #makeCenter
   text-align center
 
