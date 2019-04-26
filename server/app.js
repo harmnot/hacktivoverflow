@@ -5,10 +5,11 @@ const [express, mongoose, cors, morgan] = [
   require("cors"),
   require("morgan")
 ];
-
+const cron = require("node-cron");
 const app = express();
 const defaultROUTE = require("./routes/index.js");
 const PORT = process.env.PORT || 3000;
+const Question = require("./model/question.js");
 
 const [people, category] = [
   require("./routes/person_router.js"),
@@ -31,6 +32,32 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(morgan("tiny"));
+
+// 5 8 * * 0 would run 8:05 every Sunday.
+cron.schedule("5 8 * * 0", function() {
+  //delete empty answers every sunday
+  deleteNotUSeQuestion();
+});
+
+const log = () => {
+  console.log("heheh");
+};
+const deleteNotUSeQuestion = async () => {
+  try {
+    let ids = [];
+    const deleted = await Question.find({});
+    for (let findEmpty of deleted) {
+      if (findEmpty.answers.length === 0) {
+        ids.push(findEmpty._id);
+      }
+    }
+
+    const goingToDelete = await Question.deleteMany({ _id: { $in: ids } });
+    console.log(goingToDelete);
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 app.use("/", defaultROUTE);
 

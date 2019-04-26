@@ -4,9 +4,10 @@ const { Answer, Question, Person } = require("../model/index.js");
 const AnswerPolicy = async (req, res, next) => {
   try {
     const checkOwnerQuestion = await Answer.findById(req.params.id);
-    if (checkOwnerQuestion.user.toString() !== req.user._id) {
+    console.log(checkOwnerQuestion);
+    if (checkOwnerQuestion.user._id.toString() !== req.user._id) {
       res.status(400).json({
-        warning: `you are not the owner of the answer , cant be deleted || edited`
+        error: `you are not the owner of the answer , cant be deleted || edited`
       });
     } else {
       next();
@@ -19,9 +20,10 @@ const AnswerPolicy = async (req, res, next) => {
 const AnswerPolicyVote = async (req, res, next) => {
   try {
     const checkOwnerQuestion = await Answer.findById(req.params.id);
-    if (checkOwnerQuestion.user.toString() === req.user._id) {
+
+    if (checkOwnerQuestion.user._id.toString() === req.user._id) {
       res.status(400).json({
-        warning: `you are the owner of the answer , can't be voted`
+        error: `you are the owner of the answer , can't be voted`
       });
     } else {
       next();

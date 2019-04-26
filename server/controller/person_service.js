@@ -41,7 +41,9 @@ class PersonService {
             name: req.body.name,
             email: req.body.email
           });
-          res.status(200).json({ data: tryingLogin, token });
+          res
+            .status(200)
+            .json({ data: tryingLogin, token, id: tryingLogin._id });
         } else {
           res.status(400).json({ error: `incorrect password!` });
         }

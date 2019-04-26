@@ -1,12 +1,10 @@
 <template>
   <Loader v-if="!questions.length" />
-
   <Questions :questions="questions" v-else></Questions>
 </template>
 
 <script>
 // @ is an alias to /src
-
 // import Login from '@/components/form/login.vue';
 import { mapState, mapActions } from 'vuex';
 import Questions from '../components/questions.vue';

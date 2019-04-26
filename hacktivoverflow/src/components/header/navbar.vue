@@ -14,7 +14,7 @@
         </b-nav-item>
       </div>
       <div class="d-flex flex-row" v-else>
-        <b-nav-item class="p-2" to="/profile"> profile </b-nav-item>
+        <!-- <b-nav-item class="p-2" to="/profile"> profile </b-nav-item> -->
         <b-nav-item class="p-2" to="/" @click="logout">
           Logout
         </b-nav-item>

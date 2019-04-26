@@ -40,7 +40,17 @@ export default new Router({
     {
       path: '/question/:id',
       name: 'afterposting',
-      component: () => import('./components/posting/_questions.vue'),
+      component: () => import('./components/posting/_CURRENT_questions.vue'),
+    },
+    {
+      path: '/edit/:id',
+      name: 'editing',
+      component: () => import('./components/posting/EDIT.vue'),
+    },
+    {
+      path: '/answer/:id/fromquestion/:question',
+      name: 'editanswer',
+      component: () => import('./answer/editanswer.vue'),
     },
   ],
 });

@@ -45,6 +45,7 @@ export default {
         .post('/api/people/login', { ...this.form })
         .then(({ data }) => {
           localStorage.setItem('token', data.token);
+          localStorage.setItem('id', data.id);
           this.$router.replace({ path: '/' });
           this.$store.commit('isLoggin', true);
           this.$swal.fire({

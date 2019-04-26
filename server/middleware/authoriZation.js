@@ -4,9 +4,9 @@ const { Answer, Question, Person } = require("../model/index.js");
 const authorization = async (req, res, next) => {
   try {
     const checkOwnerQuestion = await Question.findById(req.params.id);
-    if (checkOwnerQuestion.user === req.user._id) {
+    if (checkOwnerQuestion.user.toString() === req.user._id) {
       res.status(400).json({
-        warning: `you are the owner of the question, can't vote itself`
+        error: `you are the owner of the question, can't vote itself`
       });
     } else {
       next();

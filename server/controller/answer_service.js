@@ -9,7 +9,11 @@ const {
 class AnswerService {
   static async create(req, res, next) {
     try {
-      const goCreate = await Answer.create({ ...req.body });
+      const goCreate = await Answer.create({
+        user: req.user._id,
+        fromquestion: req.body.fromquestion,
+        answer: req.body.answer
+      });
       res.status(201).json(goCreate);
     } catch (e) {
       next(e);
@@ -17,7 +21,7 @@ class AnswerService {
   }
   static async destroy(req, res, next) {
     try {
-      const destroyThis = await Answer.findByIdAndDelet(req.params.id);
+      const destroyThis = await Answer.findByIdAndDelete(req.params.id);
       if (!destroyThis) {
         res.status(400).json({ error: `can't found ${req.params.id}` });
       } else {
@@ -30,6 +34,7 @@ class AnswerService {
 
   static async updated(req, res, next) {
     try {
+      console.log(req.body, "iniii req.body");
       if (req.body.upvote) {
         const updateThis = await Answer.findOneAndUpdate(
           {
@@ -55,17 +60,46 @@ class AnswerService {
           res.status(200).json(updateThis);
         }
       } else {
-        const updateThis = await Answer.findOneAndUpdate(
-          { _id: req.params.id },
-          { ...req.body },
-          { runValidators: true }
-        );
-        if (!updateThis) {
-          res.status(400).json({ error: `can't found any` });
+        if (req.body.flexible == "true") {
+          const updateThis = await Answer.findOneAndUpdate(
+            { _id: req.params.id },
+            { ...req.body },
+            { runValidators: true }
+          );
+          if (!updateThis) {
+            res.status(400).json({ error: `can't found any` });
+          } else {
+            res.status(200).json(updateThis);
+          }
         } else {
-          res.status(200).json(updateThis);
+          const updateThis = await Answer.findOneAndUpdate(
+            { _id: req.params.id },
+            {
+              fromquestion: req.body.fromquestion,
+              answer: req.body.answer,
+              user: req.user._id
+            },
+            { runValidators: true }
+          );
+          if (!updateThis) {
+            res.status(400).json({ error: `can't found any` });
+          } else {
+            res.status(200).json(updateThis);
+          }
         }
       }
+    } catch (e) {
+      console.log(e, ";error nih");
+      next(e);
+    }
+  }
+
+  static async getOne(req, res, next) {
+    try {
+      const gettttt = await Answer.findOne({ _id: req.params.id }).populate(
+        "fromquestion"
+      );
+      res.status(200).json(gettttt);
     } catch (e) {
       next(e);
     }

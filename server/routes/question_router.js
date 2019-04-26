@@ -20,13 +20,9 @@ router.get("/search", QuestionService.filterQuestions);
 router.get("/userquestion/:id", QuestionService.deepPopulate);
 // router.get("/userquestion/:id", QuestionService.deepPopulate);
 router.post("/add", Authentic, QuestionService.add);
-router.put("/update/:id", Authentic, Authorization, QuestionService.updatedOne);
-router.delete(
-  "/delete/:id",
-  Authentic,
-  Authorization,
-  QuestionService.findOneAndDelete
-);
+router.put("/update/:id", Authentic, QuestionService.updatedOne);
+router.put("/vote/:id", Authentic, Authorization, QuestionService.updatedOne);
+router.delete("/delete/:id", Authentic, QuestionService.findOneAndDelete);
 
 router.use((err, req, res, next) => {
   if (err) {

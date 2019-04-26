@@ -14,7 +14,7 @@
             <b-col>
               <b-nav>
                 <b-col>
-                  <b-nav-item @click="goto(question._id)">
+                  <b-nav-item :to="'/question/' + question._id">
                     <h2>{{ question.title }}</h2>
                   </b-nav-item>
                 </b-col>
@@ -46,17 +46,11 @@
 export default {
   name: 'questions',
   props: ['questions'],
-  methods: {
-    goto(id) {
-      this.$route.replace({ path: '/question/' + id });
-    },
-  },
+  methods: {},
 };
 </script>
 
 <style lang="stylus">
-
-
 
 #border
   border 1px solid

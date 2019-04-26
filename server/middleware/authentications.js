@@ -13,6 +13,7 @@ const authentications = async (req, res, next) => {
         res.status(401).json({ error: "you are not authentications" });
       } else {
         req.user = decoded;
+        console.log(req.user, "ini decoded");
         next();
       }
     } catch (e) {

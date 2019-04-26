@@ -49,11 +49,14 @@ export default {
       this.$axios
         .post('/api/people/register', { ...this.form })
         .then(({ data }) => {
-          console.log(data);
+          this.$router.push('/login');
           this.$swal.fire({
             type: 'success',
             text: 'successfully register',
           });
+          this.form.email = '';
+          this.form.password = '';
+          this.form.name = '';
         })
         .catch(err => {
           console.log('err.response', err.response);

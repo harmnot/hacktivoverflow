@@ -12,6 +12,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 Vue.use(BootstrapVue);
 Vue.use(CKEditor);
+
 Vue.prototype.$axios = axios;
 Vue.prototype.$swal = swal;
 

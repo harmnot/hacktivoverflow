@@ -12,7 +12,7 @@
           <ckeditor :editor="editor" v-model="content"></ckeditor>
         </b-col>
         <b-col>
-          <b-button type="submit" variant="dark">ask</b-button>
+          <b-button type="submit" variant="dark">submit</b-button>
         </b-col>
       </b-row>
     </b-form>
@@ -24,15 +24,21 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export default {
   name: 'posting',
   components: {},
+  compoted: {
+    datatitle(d) {
+      this.title = d;
+    },
+  },
   data() {
     return {
+      question: null,
       content: '',
       title: '',
       editor: ClassicEditor,
     };
   },
   methods: {
-    askquestion() {
+    edit() {
       const token = localStorage.getItem('token');
       this.$axios
         .post(
@@ -64,6 +70,52 @@ export default {
           });
         });
     },
+    getQuestionParams() {
+      const id = this.$route.params.id;
+      this.$axios
+        .get('/api/question/userquestion/' + id)
+        .then(({ data }) => {
+          this.question = data;
+          this.title = data.title;
+          this.content = data.content;
+        })
+        .catch(err => {
+          console.log(err.response);
+
+          this.$swal.fire({
+            type: 'error',
+            text: err.response.data.error,
+          });
+        });
+    },
+    askquestion() {
+      this.$axios
+        .put(
+          '/api/question/update/' + this.$route.params.id,
+          {
+            title: this.title,
+            content: this.content,
+          },
+          {
+            headers: {
+              token: localStorage.getItem('token'),
+            },
+          },
+        )
+        .then(({ data }) => {
+          console.log(data);
+          this.$router.push('/question/' + this.$route.params.id);
+        })
+        .catch(e => {
+          this.$swal.fire({
+            type: 'errror',
+            type: e.response.data.error,
+          });
+        });
+    },
+  },
+  mounted() {
+    this.getQuestionParams();
   },
 };
 </script>
